@@ -1,6 +1,13 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+
 import _ from 'lodash';
 
 import { readEvents } from '../actions';
@@ -9,36 +16,49 @@ class EventsIndex extends Component {
   componentDidMount() {
     this.props.readEvents();
   }
+
   renderEvents() {
     const { events } = this.props;
     return _.map(events, event => (
-      <tr key={event.id}>
-        <td>{event.id}</td>
-        <td>
+      <TableRow key={event.id}>
+        <TableCell>{event.id}</TableCell>
+        <TableCell>
           <Link to={`/events/${event.id}`}>
             {event.title}
           </Link>
-        </td>
-        <td>{event.body}</td>
-      </tr>
+        </TableCell>
+        <TableCell>{event.body}</TableCell>
+      </TableRow>
     ));
   }
 
   render() {
     return (
       <>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Body</th>
-            </tr>
-          </thead>
-          <tbody>
+        <h1>Events</h1>
+        <Button
+          style={{
+            position: "fixed",
+            right: 12,
+            bottom: 12
+          }} variant="fab"
+          color="primary"
+          component={Link} to="/events/new"
+        >
+          ＋
+        </Button>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Body</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {this.renderEvents()}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
 
         <Link to="/events/new">
           New Event
