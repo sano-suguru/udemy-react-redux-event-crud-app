@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 import { postEvent } from '../actions';
 
@@ -24,28 +27,50 @@ class EventsNew extends Component {
       meta: { touched, error }
     } = field;
     return (
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && error && <span>{error}</span>}
-      </div>
+      <TextField
+        label={label}
+        type={type}
+        error={!!(touched && error)}
+        helperText={touched && error}
+        {...input}
+        fullWidth={true}
+      />
     );
   }
 
   render() {
     const { handleSubmit, pristine, submitting, invalid } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <div>
-          <Field label="Title" name="title" type="text" component={this.renderField} />
-        </div>
-        <div>
-          <Field label="Body" name="body" type="text" component={this.renderField} />
-        </div>
-        <div>
-          <input type="submit" value="Submit" disabled={pristine || submitting || invalid} />
-          <Link to="/">Cancel</Link>
-        </div>
-      </form>
+      <>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
+          <div>
+            <Field label="Title" name="title" type="text" component={this.renderField} />
+          </div>
+          <div>
+            <Field label="Body" name="body" type="text" component={this.renderField} />
+          </div>
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            style={{
+              margin: 12
+            }}
+            disabled={pristine || submitting || invalid}
+          >
+            Send
+          </Button>
+          <Button
+            variant="contained"
+            component={Link} to="/"
+            style={{
+              margin: 12
+            }}
+          >
+            Cancel
+          </Button>
+        </form>
+      </>
     );
   }
 }

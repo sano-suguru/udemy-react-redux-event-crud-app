@@ -35,11 +35,16 @@ class EventsIndex extends Component {
   render() {
     return (
       <>
-        <Button style={{
-          position: "fixed",
-          right: 12,
-          bottom: 12
-        }} variant="fab" color="secondary">
+        <h1>Events</h1>
+        <Button
+          style={{
+            position: "fixed",
+            right: 12,
+            bottom: 12
+          }} variant="fab"
+          color="primary"
+          component={Link} to="/events/new"
+        >
           ＋
         </Button>
         <Table>
